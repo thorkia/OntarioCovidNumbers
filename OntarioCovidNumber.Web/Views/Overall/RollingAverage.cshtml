@@ -1,0 +1,65 @@
+﻿@using System.Globalization
+@model IEnumerable<OntarioCovidNumber.Core.RollingAverage>
+
+@{
+	ViewData["Title"] = "Rolling Averages";
+	string DateFormat = "yyyy-MMM-dd";
+}
+
+<style>
+	.custom-container{
+		width: 700px !important;
+	}
+</style>
+
+<div class="">
+
+	<table class="table table-striped">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">Date</th>
+
+				<th scope="col">New Cases</th>
+				<th scope="col">Avg New Cases</th>
+
+				<th scope="col">Deaths</th>
+				<th scope="col">Avg Deaths</th>
+
+				<th scope="col">Hospitalization</th>
+				<th scope="col">Avg Hospital.</th>
+
+				<th scope="col">Positivty Rate</th>
+				<th scope="col">Avg Pos. Rate</th>
+
+				<th scope="col">Tests Performed</th>
+				<th scope="col">Test Backlog</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			@foreach (var avg in Model)
+			{
+				<tr>
+					<td>@avg.CurrentDay.Date.ToString(DateFormat, CultureInfo.InvariantCulture)</td>
+
+					<td>@avg.CurrentDay.NewCases</td>
+					<td>@avg.NewCases.ToString("N")</td>
+
+					<td>@avg.CurrentDay.NewDeaths</td>
+					<td>@avg.NewDeaths.ToString("N")</td>
+
+					<td>@avg.CurrentDay.InHospital</td>
+					<td>@avg.InHospital.ToString("N")</td>
+
+					<td>@avg.CurrentDay.PercentPositive.ToString("N")%</td>
+					<td>@avg.PercentPositive.ToString("N")%</td>
+
+					<td>@avg.CurrentDay.TestsCompletedLastDay</td>
+					<td>@avg.CurrentDay.PendingTests</td>
+				</tr>
+			}
+		</tbody>
+
+	</table>
+
+</div>

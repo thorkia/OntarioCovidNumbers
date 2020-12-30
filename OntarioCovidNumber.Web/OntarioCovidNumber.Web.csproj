@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OntarioCovidNumber.Core\OntarioCovidNumber.Core.csproj" />
+    <ProjectReference Include="..\OntarioCovidNumber.OntarioOData\OntarioCovidNumber.OntarioOData.csproj" />
+  </ItemGroup>
+
+</Project>
