@@ -64,12 +64,12 @@ namespace OntarioCovidNumber.Core
 
 		private decimal PercentChange(int today, int previousDay)
 		{
-			return Math.Abs((decimal)today / previousDay - 1.0m);
+			return Math.Abs((decimal) today / previousDay - 1.0m) * 100;
 		}
 
 		private decimal PercentChange(decimal today, decimal previousDay)
 		{
-			return Math.Abs(today / previousDay - 1.0m);
+			return Math.Abs(today / previousDay - 1.0m) * 100;
 		}
 
 		public static ChangeDirection GetChangeDirection(int today, int previousDay)
