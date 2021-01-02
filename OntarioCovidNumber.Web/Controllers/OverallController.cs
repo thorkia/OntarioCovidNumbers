@@ -27,10 +27,12 @@ namespace OntarioCovidNumber.Web.Controllers
 		public IActionResult Summary()
 		{
 			var today = _repository.GetDayOverDayByDate(DateTime.Today);
-			
+
+			int errorCount = 0;
 			while (today == null)
 			{
-				today = _repository.GetDayOverDayByDate(DateTime.Today.AddDays(-1));
+				errorCount++;
+				today = _repository.GetDayOverDayByDate(DateTime.Today.AddDays(-errorCount));
 			}
 
 			var yesterday = _repository.GetDayOverDayByDate(today.Today.Date.AddDays(-1));
