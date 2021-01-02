@@ -41,6 +41,8 @@ namespace OntarioCovidNumber.OntarioOData
 				tempRead = csv.GetRecords<CovidDayData>().OrderBy(c => c.Date).ToList();
 			}
 
+			_logger.LogWarning($"Records Downloaded {tempRead.Count}");
+
 			ProcessCovidDayRecords(tempRead);
 			ProcessDayOverDay(_covidDayData);
 
