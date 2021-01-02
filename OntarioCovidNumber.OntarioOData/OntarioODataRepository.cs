@@ -28,10 +28,23 @@ namespace OntarioCovidNumber.OntarioOData
 			_logger = logger;
 			_covidDayData = new List<CovidDayData>();
 			_dayOverDay = new List<DayOverDay>();
-			
-			WebClient wc = new WebClient();
-			var data = wc.DownloadString(DATA_SOURCE);
 
+			string data = string.Empty;
+			try
+			{
+				WebClient wc = new WebClient();
+				data = wc.DownloadString(DATA_SOURCE);
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex, "Error getting data");
+			}
+
+			if (string.IsNullOrEmpty(data))
+			{
+				_logger.LogWarning("Unable to load data from Government site");
+			}
+			
 			List<CovidDayData> tempRead;
 
 			using (var memory = new StringReader(data))
