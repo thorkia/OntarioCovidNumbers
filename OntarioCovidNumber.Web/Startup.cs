@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using OntarioCovidNumber.Core;
 using OntarioCovidNumber.OntarioOData;
 
@@ -21,7 +22,9 @@ namespace OntarioCovidNumber.Web
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddControllersWithViews();
-			services.AddScoped<ICovidRepository>(provider => new OntarioODataRepository());
+			services.AddScoped<ICovidRepository>(provider =>
+				                                     new OntarioODataRepository(provider
+					                                                                .GetService<ILogger<ICovidRepository>>()));
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

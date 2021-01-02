@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using CsvHelper;
+using Microsoft.Extensions.Logging;
 using OntarioCovidNumber.Core;
 
 namespace OntarioCovidNumber.OntarioOData
@@ -19,9 +20,12 @@ namespace OntarioCovidNumber.OntarioOData
 		
 		private readonly List<CovidDayData> _covidDayData;
 		private readonly List<DayOverDay> _dayOverDay;
+
+		private readonly ILogger<ICovidRepository> _logger;
 		
-		public OntarioODataRepository()
+		public OntarioODataRepository(ILogger<ICovidRepository> logger)
 		{
+			_logger = logger;
 			_covidDayData = new List<CovidDayData>();
 			_dayOverDay = new List<DayOverDay>();
 			
@@ -39,6 +43,8 @@ namespace OntarioCovidNumber.OntarioOData
 
 			ProcessCovidDayRecords(tempRead);
 			ProcessDayOverDay(_covidDayData);
+
+			_logger.LogWarning($"Records {_covidDayData.Count} Day over Day Count {_dayOverDay.Count}, ");
 		}
 
 		

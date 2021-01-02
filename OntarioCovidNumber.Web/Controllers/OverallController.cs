@@ -28,7 +28,7 @@ namespace OntarioCovidNumber.Web.Controllers
 		{
 			var today = _repository.GetDayOverDayByDate(DateTime.Today);
 			
-			if (today == null)
+			while (today == null)
 			{
 				today = _repository.GetDayOverDayByDate(DateTime.Today.AddDays(-1));
 			}
