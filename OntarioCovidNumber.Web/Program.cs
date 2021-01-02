@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.AzureAppServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,8 @@ namespace OntarioCovidNumber.Web
 
 		public static IHostBuilder CreateHostBuilder(string[] args) =>
 				Host.CreateDefaultBuilder(args)
-						.ConfigureWebHostDefaults(webBuilder =>
+				    .ConfigureLogging(logging => { logging.AddAzureWebAppDiagnostics(); })
+				    .ConfigureWebHostDefaults(webBuilder =>
 						{
 							webBuilder.UseStartup<Startup>();
 						});
