@@ -37,7 +37,13 @@ namespace OntarioCovidNumber.Web.Controllers
 
 			var yesterday = _repository.GetDayOverDayByDate(today.Today.Date.AddDays(-1));
 
-			return View( new SummaryModel { Today = today, Yesterday = yesterday});
+			var deaths2020 = _repository.GetDayDataByDate(new DateTime(2020, 12, 31)).Deaths;
+			var deaths2021 = today.Today.Deaths - deaths2020;
+
+			decimal mort2020 = (deaths2020 / (decimal) CovidDayData.OntarioPopulation) * 100;
+			decimal mort2021 = (deaths2021 / (decimal)CovidDayData.OntarioPopulation) * 100;
+
+			return View( new SummaryModel { Today = today, Yesterday = yesterday, Mortality2020 = mort2020, Mortality2021 = mort2021});
 		}
 
 		public IActionResult RollingAverage()

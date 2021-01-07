@@ -69,8 +69,10 @@
 	<div class="col-sm-4 font-weight-bold">
 		1 in <text>@(Math.Round(100/thisDate.Today.PositiveMortalityRate,0).ToString("#"))<sup title="Rounded to nearest whole number">*</sup></text> who test positive for covid die
 	</div>
+
 	<div class="w-100"></div>
-	<div class="col-sm-3 font-weight-bold">Current Provincial Mortality Rate:</div>
+
+	<div class="col-sm-3 font-weight-bold">Total Provincial Mortality Rate:</div>
 	<div class="col-sm-1 text-left">@thisDate.Today.ProvincialMortalityRate.ToString("#.000")%</div>
 	<div class="col-sm-2 text-left @Model.GetTodayVersusYesterdayDisplayClass("PROVINCIALMORTALITYRATE")">
 		<text title="@(Math.Abs(thisDate.ProvincialMortalityRateChangeAmount))">@Model.GetChangeDirection("PROVINCIALMORTALITYRATE") @Math.Abs(thisDate.ProvincialMortalityRateChangeAmount).ToString("#.000")%</text>
@@ -79,6 +81,16 @@
 		Influenza/Pneumonia 2019 Mortality Rate: @( ((2688 / (decimal)CovidDayData.OntarioPopulation)*100).ToString("#.000"))%
 		<sup><a asp-area="" asp-controller="Overall" asp-action="NoteOnFluMortality" title="A brief explanation of how this number was derived">explanation</a></sup>
 	</div>
+
+	<div class="w-100"></div>
+
+	<div class="col-sm-3 font-weight-bold">2021 Provincial Mortality Rate:</div>
+	<div class="col-sm-1 text-left">@Model.Mortality2021.ToString("#.000")%</div>
+
+	<div class="w-100"></div>
+
+	<div class="col-sm-3 font-weight-bold">2020 Provincial Mortality Rate:</div>
+	<div class="col-sm-1 text-left">@Model.Mortality2020.ToString("#.000")%</div>
 </div>
 
 <br />

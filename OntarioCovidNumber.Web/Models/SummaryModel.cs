@@ -11,6 +11,10 @@ namespace OntarioCovidNumber.Web.Models
 		public DayOverDay Today { get; set; }
 		public DayOverDay Yesterday { get; set; }
 
+		public decimal Mortality2020 { get; set; }
+
+		public decimal Mortality2021 { get; set; }
+		
 		public string GetTodayVersusYesterdayDisplayClass(string field)
 		{
 			ChangeType change = ChangeType.NoChange;
