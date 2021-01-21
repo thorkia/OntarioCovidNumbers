@@ -52,7 +52,7 @@
 	<div class="col-sm-3 font-weight-bold">Total Deaths:</div>
 	<div class="col-sm-1 text-left">@thisDate.Today.Deaths</div>
 	<div class="col-sm-4 text-left @Model.GetTodayVersusYesterdayDisplayClass("DEATHS")">
-		@Model.GetChangeDirection("DEATHS") @Math.Abs(thisDate.Today.NewDeaths) / @thisDate.NewDeathsChangePercent.ToString("N")%
+		@Model.GetChangeDirection("DEATHS") @Math.Abs(thisDate.Today.NewDeaths) / @thisDate.DeathsChangePercent.ToString("N")%
 	</div>
 	<div class="w-100"></div>
 	<div class="col-sm-3 font-weight-bold">Overall Mortality Rate (tested):</div>
