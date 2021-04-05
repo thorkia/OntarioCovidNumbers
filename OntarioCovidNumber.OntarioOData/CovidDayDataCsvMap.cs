@@ -22,8 +22,8 @@ namespace OntarioCovidNumber.OntarioOData
 			Map(m => m.PendingTests).TypeConverter<ConvertToInt>().Name("Under Investigation").Default(0);
 
 			Map(m => m.InHospital).TypeConverter<ConvertToInt>().Name("Number of patients hospitalized with COVID-19").Default(0);
-			Map(m => m.InIcu).TypeConverter<ConvertToInt>().Name("Number of patients in ICU with COVID-19").Default(0);
-			Map(m => m.OnVentilator).TypeConverter<ConvertToInt>().Name("Number of patients in ICU on a ventilator with COVID-19").Default(0);
+			Map(m => m.InIcu).TypeConverter<ConvertToInt>().Name("Number of patients in ICU due to COVID-19").Default(0);
+			Map(m => m.OnVentilator).TypeConverter<ConvertToInt>().Name("Number of patients in ICU on a ventilator due to COVID-19").Default(0);
 
 		}
 	}
