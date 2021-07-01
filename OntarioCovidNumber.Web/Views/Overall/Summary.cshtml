@@ -2,45 +2,101 @@
 @model OntarioCovidNumber.Web.Models.SummaryModel
 @{
 	ViewData["Title"] = "Daily Summary";
-	var thisDate = @Model.Today;
+	var todayCases = @Model.TodayCases;
+	var todayVax = @Model.TodayVax;
 }
 
-<h1>@Model.Today.Today.Date.ToLongDateString()</h1>
+<h1>@Model.TodayCases.Today.Date.ToLongDateString()</h1>
 
 <h3>Summary</h3>
 <br />
 <div class="row">
 	<div class="col-sm-2 font-weight-bold">Total Cases:</div>
-	<div class="col-sm-1 text-left">@thisDate.Today.TotalCases</div>
-	<div class="col-sm-4 text-left @Model.GetTodayVersusYesterdayDisplayClass("NEWCASES")">
-		@Model.GetChangeDirection("TOTALCASES") @Math.Abs(thisDate.Today.NewCases) / @thisDate.TotalCaseChangePercent.ToString("N")%
+	<div class="col-sm-1 text-left">@todayCases.Today.TotalCases</div>
+	<div class="col-sm-4 text-left @Model.GetTodayVersusYesterdayCasesDisplayClass("NEWCASES")">
+		@Model.GetCasesChangeDirection("TOTALCASES") @Math.Abs(todayCases.Today.NewCases) / @todayCases.TotalCaseChangePercent.ToString("N")%
 	</div>
 	<div class="w-100"></div>
 
 	<div class="col-sm-2 font-weight-bold">Test Completed Today:</div>
-	<div class="col-sm-1 text-left">@thisDate.Today.TestsCompletedLastDay</div>
-	<div class="col-sm-4 text-left @Model.GetTodayVersusYesterdayDisplayClass("TESTSCOMPLETEDLASTDAY")">
-		@Model.GetChangeDirection("TESTSCOMPLETEDLASTDAY") @Math.Abs(thisDate.TestCompletedChangeAmount) / @thisDate.TestCompletedChangePercent.ToString("N")%
+	<div class="col-sm-1 text-left">@todayCases.Today.TestsCompletedLastDay</div>
+	<div class="col-sm-4 text-left @Model.GetTodayVersusYesterdayCasesDisplayClass("TESTSCOMPLETEDLASTDAY")">
+		@Model.GetCasesChangeDirection("TESTSCOMPLETEDLASTDAY") @Math.Abs(todayCases.TestCompletedChangeAmount) / @todayCases.TestCompletedChangePercent.ToString("N")%
 	</div>
 	<div class="w-100"></div>
 
 	<div class="col-sm-2 font-weight-bold">New Cases:</div>
-	<div class="col-sm-1 text-left">@thisDate.Today.NewCases</div>
-	<div class="col-sm-4 text-left @Model.GetTodayVersusYesterdayDisplayClass("NEWCASES")">
-		@Model.GetChangeDirection("NEWCASES") @Math.Abs(thisDate.NewCasesChangeAmount) / @thisDate.NewCasesChangePercent.ToString("N")%
+	<div class="col-sm-1 text-left">@todayCases.Today.NewCases</div>
+	<div class="col-sm-4 text-left @Model.GetTodayVersusYesterdayCasesDisplayClass("NEWCASES")">
+		@Model.GetCasesChangeDirection("NEWCASES") @Math.Abs(todayCases.NewCasesChangeAmount) / @todayCases.NewCasesChangePercent.ToString("N")%
 	</div>
 	<div class="w-100"></div>
 	<div class="col-sm-2 font-weight-bold">Recoveries:</div>
-	<div class="col-sm-1 text-left">@thisDate.Today.NewResolved</div>
-	<div class="col-sm-4 text-left @Model.GetTodayVersusYesterdayDisplayClass("NEWRESOLVED")">
-		@Model.GetChangeDirection("NEWRESOLVED") @Math.Abs(thisDate.NewResolvedChangeAmount) / @thisDate.NewResolvedChangePercent.ToString("N")%
+	<div class="col-sm-1 text-left">@todayCases.Today.NewResolved</div>
+	<div class="col-sm-4 text-left @Model.GetTodayVersusYesterdayCasesDisplayClass("NEWRESOLVED")">
+		@Model.GetCasesChangeDirection("NEWRESOLVED") @Math.Abs(todayCases.NewResolvedChangeAmount) / @todayCases.NewResolvedChangePercent.ToString("N")%
 	</div>
 	<div class="w-100"></div>
 	<div class="col-sm-2 font-weight-bold">New Deaths:</div>
-	<div class="col-sm-1 text-left">@thisDate.Today.NewDeaths</div>
-	<div class="col-sm-4 text-left @Model.GetTodayVersusYesterdayDisplayClass("NEWDEATHS")">
-		@Model.GetChangeDirection("NEWDEATHS") @Math.Abs(thisDate.NewDeathsChangeAmount) / @thisDate.NewDeathsChangePercent.ToString("N")%
+	<div class="col-sm-1 text-left">@todayCases.Today.NewDeaths</div>
+	<div class="col-sm-4 text-left @Model.GetTodayVersusYesterdayCasesDisplayClass("NEWDEATHS")">
+		@Model.GetCasesChangeDirection("NEWDEATHS") @Math.Abs(todayCases.NewDeathsChangeAmount) / @todayCases.NewDeathsChangePercent.ToString("N")%
 	</div>
+</div>
+
+<br />
+<br />
+<h3>Vaccine Numbers</h3>
+<br />
+<div class="row">
+	<div class="col-sm-2 font-weight-bold">Doses Today:</div>
+	<div class="col-sm-1 text-left">@todayVax.Today.DosesAdministeredToday</div>
+	<div class="w-100"></div>
+
+	<div class="col-sm-2 font-weight-bold">Total One or More:</div>
+	<div class="col-sm-1 text-left">@(todayVax.Today.NumberOnlyFirstDose + todayVax.Today.TotalFullyVaccinated)</div>
+	<div class="col-sm-4 text-left text-success">
+		Increase of @(todayVax.TotalFullyVaccinatedChangeAmount + todayVax.FirstDoseOnlyChangeAmount)
+	</div>
+	<div class="w-100"></div>
+
+	<div class="col-sm-2 font-weight-bold" title="Based on eligible estimate Ontario population">Percent One or More:</div>
+	<div class="col-sm-1 text-left">@todayVax.Today.AtleastOnePercentage.ToString("N")%</div>
+	<div class="col-sm-4 text-left text-success">
+		Increase of @todayVax.AtleastOnePercentChangeAmount.ToString("N")%
+	</div>
+	<div class="w-100"></div>
+
+	<div class="col-sm-2 font-weight-bold">Total Both Doses:</div>
+	<div class="col-sm-1 text-left">@todayVax.Today.TotalFullyVaccinated</div>
+	<div class="col-sm-4 text-left text-success">
+		@Model.GetVaxChangeDirection(todayVax.TotalFullyVaccinatedChangeAmount)	@todayVax.TotalFullyVaccinatedChangeAmount
+	</div>
+	<div class="w-100"></div>
+
+	<div class="col-sm-2 font-weight-bold" title="Based on eligible estimate Ontario population">Percent Both Doses:</div>
+	<div class="col-sm-1 text-left">@todayVax.Today.FullyVaccinatedPercentage.ToString("N")%</div>
+	<div class="col-sm-4 text-left text-success">
+		@Model.GetVaxChangeDirection(todayVax.FullyVaccinatedPercentChangeAmount)	@todayVax.FullyVaccinatedPercentChangeAmount.ToString("N")%
+	</div>
+	<div class="w-100"></div>
+
+
+	<div class="col-sm-2 font-weight-bold">Total First Only:</div>
+	<div class="col-sm-1 text-left">@todayVax.Today.NumberOnlyFirstDose</div>
+	<div class="col-sm-4 text-left text-success">
+		@Model.GetVaxChangeDirection(todayVax.FirstDoseOnlyChangeAmount) @todayVax.FirstDoseOnlyChangeAmount.ToString("+#;-#;0")
+	</div>
+	<div class="w-100"></div>
+
+	<div class="col-sm-2 font-weight-bold" title="Based on eligible estimate Ontario population">Percent First Only:</div>
+	<div class="col-sm-1 text-left">@todayVax.Today.FirstDoseOnlyPercentage.ToString("N")%</div>
+	<div class="col-sm-4 text-left text-success">
+		@Model.GetVaxChangeDirection(todayVax.FirstDoseOnlyPercentChangeAmount)	@todayVax.FirstDoseOnlyPercentChangeAmount.ToString("N")%
+	</div>
+
+
+
 </div>
 
 <br />
@@ -50,35 +106,35 @@
 <br />
 <div class="row">
 	<div class="col-sm-3 font-weight-bold">Total Deaths:</div>
-	<div class="col-sm-1 text-left">@thisDate.Today.Deaths</div>
-	<div class="col-sm-4 text-left @Model.GetTodayVersusYesterdayDisplayClass("DEATHS")">
-		@Model.GetChangeDirection("DEATHS") @Math.Abs(thisDate.Today.NewDeaths) / @thisDate.DeathsChangePercent.ToString("N")%
+	<div class="col-sm-1 text-left">@todayCases.Today.Deaths</div>
+	<div class="col-sm-4 text-left @Model.GetTodayVersusYesterdayCasesDisplayClass("DEATHS")">
+		@Model.GetCasesChangeDirection("DEATHS") @Math.Abs(todayCases.Today.NewDeaths) / @todayCases.DeathsChangePercent.ToString("N")%
 	</div>
 	<div class="w-100"></div>
 	<div class="col-sm-3 font-weight-bold">Overall Mortality Rate (tested):</div>
-	<div class="col-sm-1 text-left">@thisDate.Today.TestMortalityRate.ToString("#.000")%</div>
-	<div class="col-sm-4 text-left @Model.GetTodayVersusYesterdayDisplayClass("TESTMORTALITYRATE")">
-		<text title="@(Math.Abs(thisDate.TestMortalityRateChangeAmount))">@Model.GetChangeDirection("TESTMORTALITYRATE") @Math.Abs(thisDate.TestMortalityRateChangeAmount).ToString("#.000")%</text>
+	<div class="col-sm-1 text-left">@todayCases.Today.TestMortalityRate.ToString("#.000")%</div>
+	<div class="col-sm-4 text-left @Model.GetTodayVersusYesterdayCasesDisplayClass("TESTMORTALITYRATE")">
+		<text title="@(Math.Abs(todayCases.TestMortalityRateChangeAmount))">@Model.GetCasesChangeDirection("TESTMORTALITYRATE") @Math.Abs(todayCases.TestMortalityRateChangeAmount).ToString("#.000")%</text>
 	</div>
 	<div class="w-100"></div>
 	<div class="col-sm-3 font-weight-bold">Overall Mortality Rate (positive):</div>
-	<div class="col-sm-1 text-left">@thisDate.Today.PositiveMortalityRate.ToString("#.000")%</div>
-	<div class="col-sm-2 text-left @Model.GetTodayVersusYesterdayDisplayClass("POSITIVEMORTALITYRATE")">
-		<text title="@(Math.Abs(thisDate.PositiveMortalityRateChangeAmount))">@Model.GetChangeDirection("POSITIVEMORTALITYRATE") @Math.Abs(thisDate.PositiveMortalityRateChangeAmount).ToString("#.000")%</text>
+	<div class="col-sm-1 text-left">@todayCases.Today.PositiveMortalityRate.ToString("#.000")%</div>
+	<div class="col-sm-2 text-left @Model.GetTodayVersusYesterdayCasesDisplayClass("POSITIVEMORTALITYRATE")">
+		<text title="@(Math.Abs(todayCases.PositiveMortalityRateChangeAmount))">@Model.GetCasesChangeDirection("POSITIVEMORTALITYRATE") @Math.Abs(todayCases.PositiveMortalityRateChangeAmount).ToString("#.000")%</text>
 	</div>
 	<div class="col-sm-4 font-weight-bold">
-		1 in <text>@(Math.Round(100/thisDate.Today.PositiveMortalityRate,0).ToString("#"))<sup title="Rounded to nearest whole number">*</sup></text> who test positive for covid die
+		1 in <text>@(Math.Round(100/todayCases.Today.PositiveMortalityRate,0).ToString("#"))<sup title="Rounded to nearest whole number">*</sup></text> who test positive for covid die
 	</div>
 
 	<div class="w-100"></div>
 
 	<div class="col-sm-3 font-weight-bold">Total Provincial Mortality Rate:</div>
-	<div class="col-sm-1 text-left">@thisDate.Today.ProvincialMortalityRate.ToString("#.000")%</div>
-	<div class="col-sm-2 text-left @Model.GetTodayVersusYesterdayDisplayClass("PROVINCIALMORTALITYRATE")">
-		<text title="@(Math.Abs(thisDate.ProvincialMortalityRateChangeAmount))">@Model.GetChangeDirection("PROVINCIALMORTALITYRATE") @Math.Abs(thisDate.ProvincialMortalityRateChangeAmount).ToString("#.000")%</text>
+	<div class="col-sm-1 text-left">@todayCases.Today.ProvincialMortalityRate.ToString("#.000")%</div>
+	<div class="col-sm-2 text-left @Model.GetTodayVersusYesterdayCasesDisplayClass("PROVINCIALMORTALITYRATE")">
+		<text title="@(Math.Abs(todayCases.ProvincialMortalityRateChangeAmount))">@Model.GetCasesChangeDirection("PROVINCIALMORTALITYRATE") @Math.Abs(todayCases.ProvincialMortalityRateChangeAmount).ToString("#.000")%</text>
 	</div>
 	<div class="col-sm-5 text-left">
-		Influenza/Pneumonia 2019 Mortality Rate: @( ((2688 / (decimal)CovidDayData.OntarioPopulation)*100).ToString("#.000"))%
+		Influenza/Pneumonia 2019 Mortality Rate: @( ((2688 / (decimal)StaticData.OntarioPopulation)*100).ToString("#.000"))%
 		<sup><a asp-area="" asp-controller="Overall" asp-action="NoteOnFluMortality" title="A brief explanation of how this number was derived">explanation</a></sup>
 	</div>
 
@@ -100,21 +156,21 @@
 <br />
 <div class="row">
 	<div class="col-sm-2 font-weight-bold">Hospitalized:</div>
-	<div class="col-sm-1 text-left">@thisDate.Today.InHospital</div>
-	<div class="col-sm-4 text-left @Model.GetTodayVersusYesterdayDisplayClass("INHOSPITAL")">
-		@Model.GetChangeDirection("INHOSPITAL") @Math.Abs(thisDate.InHospitalChangeAmount) / @thisDate.InHospitalChangePercent.ToString("N")%
+	<div class="col-sm-1 text-left">@todayCases.Today.InHospital</div>
+	<div class="col-sm-4 text-left @Model.GetTodayVersusYesterdayCasesDisplayClass("INHOSPITAL")">
+		@Model.GetCasesChangeDirection("INHOSPITAL") @Math.Abs(todayCases.InHospitalChangeAmount) / @todayCases.InHospitalChangePercent.ToString("N")%
 	</div>
 	<div class="w-100"></div>
 	<div class="col-sm-2 font-weight-bold">In ICU Unit:</div>
-	<div class="col-sm-1 text-left">@thisDate.Today.InIcu</div>
-	<div class="col-sm-4 text-left @Model.GetTodayVersusYesterdayDisplayClass("INICU")">
-		@Model.GetChangeDirection("INICU") @Math.Abs(thisDate.InIcuChangeAmount) / @thisDate.InIcuChangePercent.ToString("N")%
+	<div class="col-sm-1 text-left">@todayCases.Today.InIcu</div>
+	<div class="col-sm-4 text-left @Model.GetTodayVersusYesterdayCasesDisplayClass("INICU")">
+		@Model.GetCasesChangeDirection("INICU") @Math.Abs(todayCases.InIcuChangeAmount) / @todayCases.InIcuChangePercent.ToString("N")%
 	</div>
 	<div class="w-100"></div>
 	<div class="col-sm-2 font-weight-bold">On Ventilator:</div>
-	<div class="col-sm-1 text-left">@thisDate.Today.OnVentilator</div>
-	<div class="col-sm-4 text-left @Model.GetTodayVersusYesterdayDisplayClass("ONVENTILATOR")">
-		@Model.GetChangeDirection("ONVENTILATOR") @Math.Abs(thisDate.OnVentilatorChangeAmount) / @thisDate.OnVentilatorChangePercent.ToString("N")%
+	<div class="col-sm-1 text-left">@todayCases.Today.OnVentilator</div>
+	<div class="col-sm-4 text-left @Model.GetTodayVersusYesterdayCasesDisplayClass("ONVENTILATOR")">
+		@Model.GetCasesChangeDirection("ONVENTILATOR") @Math.Abs(todayCases.OnVentilatorChangeAmount) / @todayCases.OnVentilatorChangePercent.ToString("N")%
 	</div>
 </div>
 

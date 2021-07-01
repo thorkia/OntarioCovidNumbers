@@ -5,8 +5,6 @@ namespace OntarioCovidNumber.Core
 {
 	public class CovidDayData
 	{
-		public static readonly int OntarioPopulation = 14733119;
-
 		#region OdataFields
 		public DateTime Date { get; set; }
 
@@ -87,7 +85,7 @@ namespace OntarioCovidNumber.Core
 		/// <summary>
 		/// Mortality Rate for the entire population of Ontario
 		/// </summary>
-		public decimal ProvincialMortalityRate => (Deaths / (decimal) OntarioPopulation) * 100;
+		public decimal ProvincialMortalityRate => (Deaths / (decimal) StaticData.OntarioPopulation) * 100;
 
 		#endregion
 	}

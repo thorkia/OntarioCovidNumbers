@@ -7,15 +7,28 @@ namespace OntarioCovidNumber.Core
 	public interface ICovidRepository
 	{
 
-		IEnumerable<CovidDayData> GetDayData();
+		IEnumerable<CovidDayData> GetCaseDayData();
 
-		IEnumerable<DayOverDay> GetDayOverDayData();
+		IEnumerable<CasesDayOverDay> GetCaseDayOverDayData();
 
-		IEnumerable<RollingAverage> GetRollingAverage(int avg = 7);
+		IEnumerable<CasesRollingAverage> GetCasesRollingAverage(int avg = 7);
 
-		CovidDayData GetDayDataByDate(DateTime date);
+		CovidDayData GetCaseDayDataByDate(DateTime date);
 
-		DayOverDay GetDayOverDayByDate(DateTime date);
+		CasesDayOverDay GetCaseDayOverDayByDate(DateTime date);
+
+
+		IEnumerable<VaccineDayData> GetVaccineDayData();
+
+		IEnumerable<VaccineDayOverDay> GetVaccineDayOverDayData();
+
+		//IEnumerable<CasesRollingAverage> GetVaccinesRollingAverage(int avg = 7);
+
+		VaccineDayData GetVaccineDayDataByDate(DateTime date);
+
+		VaccineDayOverDay GetVaccineDayOverDayByDate(DateTime date);
+
+
 
 	}
 }

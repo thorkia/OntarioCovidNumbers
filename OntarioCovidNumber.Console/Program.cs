@@ -19,9 +19,9 @@ namespace OntarioCovidNumber.Console
 
 			ICovidRepository repo = new OntarioODataRepository(logger);
 
-			var items = repo.GetDayData();
-			var dayover = repo.GetDayOverDayData();
-			var roll = repo.GetRollingAverage(7);
+			var items = repo.GetCaseDayData();
+			var dayover = repo.GetCaseDayOverDayData();
+			var roll = repo.GetCasesRollingAverage(7);
 
 			var lastavg = roll.Last();
 

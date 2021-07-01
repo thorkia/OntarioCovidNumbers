@@ -26,29 +26,31 @@ namespace OntarioCovidNumber.Web.Controllers
 
 		public IActionResult Summary()
 		{
-			var today = _repository.GetDayOverDayByDate(DateTime.Today);
+			var todayCases = _repository.GetCaseDayOverDayByDate(DateTime.Today);
+			var todayVax = _repository.GetVaccineDayOverDayByDate(DateTime.Today);
 
 			int errorCount = 0;
-			while (today == null)
+			while (todayCases == null)
 			{
 				errorCount++;
-				today = _repository.GetDayOverDayByDate(DateTime.Today.AddDays(-errorCount));
+				todayCases = _repository.GetCaseDayOverDayByDate(DateTime.Today.AddDays(-errorCount));
+				todayVax = _repository.GetVaccineDayOverDayByDate(DateTime.Today.AddDays(-errorCount));
 			}
 
-			var yesterday = _repository.GetDayOverDayByDate(today.Today.Date.AddDays(-1));
+			var yesterdayCases = _repository.GetCaseDayOverDayByDate(todayCases.Today.Date.AddDays(-1));
 
-			var deaths2020 = _repository.GetDayDataByDate(new DateTime(2020, 12, 31)).Deaths;
-			var deaths2021 = today.Today.Deaths - deaths2020;
+			var deaths2020 = _repository.GetCaseDayDataByDate(new DateTime(2020, 12, 31)).Deaths;
+			var deaths2021 = todayCases.Today.Deaths - deaths2020;
 
-			decimal mort2020 = (deaths2020 / (decimal) CovidDayData.OntarioPopulation) * 100;
-			decimal mort2021 = (deaths2021 / (decimal)CovidDayData.OntarioPopulation) * 100;
+			decimal mort2020 = (deaths2020 / (decimal)StaticData.OntarioPopulation) * 100;
+			decimal mort2021 = (deaths2021 / (decimal)StaticData.OntarioPopulation) * 100;
 
-			return View( new SummaryModel { Today = today, Yesterday = yesterday, Mortality2020 = mort2020, Mortality2021 = mort2021});
+			return View( new SummaryModel { TodayCases = todayCases, YesterdayCases = yesterdayCases, Mortality2020 = mort2020, Mortality2021 = mort2021, TodayVax = todayVax});
 		}
 
 		public IActionResult RollingAverage()
 		{
-			return View(_repository.GetRollingAverage().OrderByDescending( d => d.CurrentDay.Date));
+			return View(_repository.GetCasesRollingAverage().OrderByDescending( d => d.CurrentDay.Date));
 		}
 
 		public IActionResult NoteOnFluMortality()

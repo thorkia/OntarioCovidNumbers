@@ -3,68 +3,84 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using OntarioCovidNumber.Core;
+using OntarioCovidNumber.OntarioOData;
 
 namespace OntarioCovidNumber.Web.Models
 {
 	public class SummaryModel
 	{
-		public DayOverDay Today { get; set; }
-		public DayOverDay Yesterday { get; set; }
+		public CasesDayOverDay TodayCases { get; set; }
+		public CasesDayOverDay YesterdayCases { get; set; }
+
+		public VaccineDayOverDay TodayVax { get; set; }
+
+		public VaccineDayOverDay YesterdayVax { get; set; }
 
 		public decimal Mortality2020 { get; set; }
 
 		public decimal Mortality2021 { get; set; }
 		
-		public string GetTodayVersusYesterdayDisplayClass(string field)
+		public string GetTodayVersusYesterdayCasesDisplayClass(string field)
 		{
 			ChangeType change = ChangeType.NoChange;
 			
 			switch (field.ToUpper())
 			{
 				case "NEWCASES":
-					change = DayOverDay.GetChangeType(field.ToUpper(),
-					                                DayOverDay.GetChangeDirection(Today.Today.NewCases, Yesterday.Today.NewCases));
+					change = DayOverDayHelpers.GetChangeType(field.ToUpper(),
+					                                         DayOverDayHelpers.GetChangeDirection(TodayCases.Today.NewCases, YesterdayCases.Today.NewCases),
+					                                         CasesDayOverDay.IncreaseGoodFields);
 					break;
 				case "TESTSCOMPLETEDLASTDAY":
-					change = DayOverDay.GetChangeType(field.ToUpper(),
-					                                  DayOverDay.GetChangeDirection(Today.Today.TestsCompletedLastDay, Yesterday.Today.TestsCompletedLastDay));
+					change = DayOverDayHelpers.GetChangeType(field.ToUpper(),
+					                                         DayOverDayHelpers.GetChangeDirection(TodayCases.Today.TestsCompletedLastDay, YesterdayCases.Today.TestsCompletedLastDay),
+					                                         CasesDayOverDay.IncreaseGoodFields);
 					break;
 				case "NEWRESOLVED":
-					change = DayOverDay.GetChangeType(field.ToUpper(),
-					                                  DayOverDay.GetChangeDirection(Today.Today.NewResolved, Yesterday.Today.NewResolved));
+					change = DayOverDayHelpers.GetChangeType(field.ToUpper(),
+					                                         DayOverDayHelpers.GetChangeDirection(TodayCases.Today.NewResolved, YesterdayCases.Today.NewResolved),
+					                                         CasesDayOverDay.IncreaseGoodFields);
 					break;
 				case "NEWDEATHS":
-					change = DayOverDay.GetChangeType(field.ToUpper(),
-					                                  DayOverDay.GetChangeDirection(Today.Today.NewDeaths, Yesterday.Today.NewDeaths));
+					change = DayOverDayHelpers.GetChangeType(field.ToUpper(),
+					                                         DayOverDayHelpers.GetChangeDirection(TodayCases.Today.NewDeaths, YesterdayCases.Today.NewDeaths),
+					                                         CasesDayOverDay.IncreaseGoodFields);
 					break;
 				case "INHOSPITAL":
-					change = DayOverDay.GetChangeType(field.ToUpper(),
-					                                  DayOverDay.GetChangeDirection(Today.Today.InHospital, Yesterday.Today.InHospital));
+					change = DayOverDayHelpers.GetChangeType(field.ToUpper(),
+					                                         DayOverDayHelpers.GetChangeDirection(TodayCases.Today.InHospital, YesterdayCases.Today.InHospital),
+					                                         CasesDayOverDay.IncreaseGoodFields);
 					break;
 				case "INICU":
-					change = DayOverDay.GetChangeType(field.ToUpper(),
-					                                  DayOverDay.GetChangeDirection(Today.Today.InIcu, Yesterday.Today.InIcu));
+					change = DayOverDayHelpers.GetChangeType(field.ToUpper(),
+					                                         DayOverDayHelpers.GetChangeDirection(TodayCases.Today.InIcu, YesterdayCases.Today.InIcu),
+					                                         CasesDayOverDay.IncreaseGoodFields);
 					break;
 				case "ONVENTILATOR":
-					change = DayOverDay.GetChangeType(field.ToUpper(),
-					                                  DayOverDay.GetChangeDirection(Today.Today.OnVentilator, Yesterday.Today.OnVentilator));
+					change = DayOverDayHelpers.GetChangeType(field.ToUpper(),
+					                                         DayOverDayHelpers.GetChangeDirection(TodayCases.Today.OnVentilator, YesterdayCases.Today.OnVentilator),
+					                                         CasesDayOverDay.IncreaseGoodFields);
 					break;
 				case "TESTMORTALITYRATE":
-					change = DayOverDay.GetChangeType(field.ToUpper(),
-					                                  DayOverDay.GetChangeDirection(Today.Today.TestMortalityRate, Yesterday.Today.TestMortalityRate));
+					change = DayOverDayHelpers.GetChangeType(field.ToUpper(),
+					                                         DayOverDayHelpers.GetChangeDirection(TodayCases.Today.TestMortalityRate, YesterdayCases.Today.TestMortalityRate),
+					                                         CasesDayOverDay.IncreaseGoodFields);
 					break;
 				case "POSITIVEMORTALITYRATE":
-					change = DayOverDay.GetChangeType(field.ToUpper(),
-					                                  DayOverDay.GetChangeDirection(Today.Today.PositiveMortalityRate, Yesterday.Today.PositiveMortalityRate));
+					change = DayOverDayHelpers.GetChangeType(field.ToUpper(),
+					                                         DayOverDayHelpers.GetChangeDirection(TodayCases.Today.PositiveMortalityRate, YesterdayCases.Today.PositiveMortalityRate),
+					                                         CasesDayOverDay.IncreaseGoodFields);
 					break;
 				case "DEATHS":
-					change = DayOverDay.GetChangeType(field.ToUpper(),
-					                                  DayOverDay.GetChangeDirection(Today.Today.Deaths, Yesterday.Today.Deaths));
+					change = DayOverDayHelpers.GetChangeType(field.ToUpper(),
+					                                         DayOverDayHelpers.GetChangeDirection(TodayCases.Today.Deaths, YesterdayCases.Today.Deaths),
+					                                         CasesDayOverDay.IncreaseGoodFields);
 					break;
 
 				case "PROVINCIALMORTALITYRATE":
-					change = DayOverDay.GetChangeType(field.ToUpper(),
-					                                  DayOverDay.GetChangeDirection(Today.Today.ProvincialMortalityRate, Yesterday.Today.ProvincialMortalityRate));
+					change = DayOverDayHelpers.GetChangeType(field.ToUpper(),
+					                                         DayOverDayHelpers.GetChangeDirection(TodayCases.Today.ProvincialMortalityRate, YesterdayCases.Today.ProvincialMortalityRate),
+					                                         CasesDayOverDay.IncreaseGoodFields);
 					break;
 			}
 
@@ -79,51 +95,51 @@ namespace OntarioCovidNumber.Web.Models
 			return "text-info";
 		}
 
-		public string GetChangeDirection(string field)
+		public string GetCasesChangeDirection(string field)
 		{
 			ChangeDirection dir = ChangeDirection.NoChange;
 
 			switch (field.ToUpper())
 			{
 				case "TOTALCASES":
-					dir = DayOverDay.GetChangeDirection(Today.Today.TotalCases, Yesterday.Today.TotalCases);
+					dir = DayOverDayHelpers.GetChangeDirection(TodayCases.Today.TotalCases, YesterdayCases.Today.TotalCases);
 					break;
 				case "NEWCASES":
-					dir = DayOverDay.GetChangeDirection(Today.Today.NewCases, Yesterday.Today.NewCases);
+					dir = DayOverDayHelpers.GetChangeDirection(TodayCases.Today.NewCases, YesterdayCases.Today.NewCases);
 					break;
 				case "TESTSCOMPLETEDLASTDAY":
-					dir = DayOverDay.GetChangeDirection(Today.Today.TestsCompletedLastDay, Yesterday.Today.TestsCompletedLastDay);
+					dir = DayOverDayHelpers.GetChangeDirection(TodayCases.Today.TestsCompletedLastDay, YesterdayCases.Today.TestsCompletedLastDay);
 					break;
 
 				case "NEWRESOLVED":
-					dir = DayOverDay.GetChangeDirection(Today.Today.NewResolved, Yesterday.Today.NewResolved);
+					dir = DayOverDayHelpers.GetChangeDirection(TodayCases.Today.NewResolved, YesterdayCases.Today.NewResolved);
 					break;
 
 				case "NEWDEATHS":
-					dir = DayOverDay.GetChangeDirection(Today.Today.NewDeaths, Yesterday.Today.NewDeaths);
+					dir = DayOverDayHelpers.GetChangeDirection(TodayCases.Today.NewDeaths, YesterdayCases.Today.NewDeaths);
 					break;
 
 				case "INHOSPITAL":
-					dir = DayOverDay.GetChangeDirection(Today.Today.InHospital, Yesterday.Today.InHospital);
+					dir = DayOverDayHelpers.GetChangeDirection(TodayCases.Today.InHospital, YesterdayCases.Today.InHospital);
 					break;
 				case "INICU":
-					dir = DayOverDay.GetChangeDirection(Today.Today.InIcu, Yesterday.Today.InIcu);
+					dir = DayOverDayHelpers.GetChangeDirection(TodayCases.Today.InIcu, YesterdayCases.Today.InIcu);
 					break;
 				case "ONVENTILATOR":
-					dir = DayOverDay.GetChangeDirection(Today.Today.OnVentilator, Yesterday.Today.OnVentilator);
+					dir = DayOverDayHelpers.GetChangeDirection(TodayCases.Today.OnVentilator, YesterdayCases.Today.OnVentilator);
 					break;
 
 				case "TESTMORTALITYRATE":
-					dir = DayOverDay.GetChangeDirection(Today.Today.TestMortalityRate, Yesterday.Today.TestMortalityRate);
+					dir = DayOverDayHelpers.GetChangeDirection(TodayCases.Today.TestMortalityRate, YesterdayCases.Today.TestMortalityRate);
 					break;
 				case "POSITIVEMORTALITYRATE":
-					dir = DayOverDay.GetChangeDirection(Today.Today.PositiveMortalityRate, Yesterday.Today.PositiveMortalityRate);
+					dir = DayOverDayHelpers.GetChangeDirection(TodayCases.Today.PositiveMortalityRate, YesterdayCases.Today.PositiveMortalityRate);
 					break;
 				case "DEATHS":
-					dir = DayOverDay.GetChangeDirection(Today.Today.Deaths, Yesterday.Today.Deaths);
+					dir = DayOverDayHelpers.GetChangeDirection(TodayCases.Today.Deaths, YesterdayCases.Today.Deaths);
 					break;
 				case "PROVINCIALMORTALITYRATE":
-					dir = DayOverDay.GetChangeDirection(Today.Today.ProvincialMortalityRate, Yesterday.Today.ProvincialMortalityRate);
+					dir = DayOverDayHelpers.GetChangeDirection(TodayCases.Today.ProvincialMortalityRate, YesterdayCases.Today.ProvincialMortalityRate);
 					break;
 			}
 
@@ -139,5 +155,36 @@ namespace OntarioCovidNumber.Web.Models
 
 			return "";
 		}
+
+		public string GetVaxChangeDirection(int value)
+		{
+			if (value == 0)
+			{
+				return "";
+			}
+
+			if (value < 0)
+			{
+				return "Decrease of ";
+			}
+
+			return "Increase of ";
+		}
+
+		public string GetVaxChangeDirection(decimal value)
+		{
+			if (value == 0)
+			{
+				return "";
+			}
+
+			if (value < 0)
+			{
+				return "Decrease of ";
+			}
+
+			return "Increase of ";
+		}
+
 	}
 }

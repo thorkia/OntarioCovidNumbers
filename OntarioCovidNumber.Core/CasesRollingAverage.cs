@@ -5,7 +5,7 @@ using System.Text;
 
 namespace OntarioCovidNumber.Core
 {
-	public class RollingAverage
+	public class CasesRollingAverage
 	{
 		private readonly List<CovidDayData> _days;
 		public CovidDayData CurrentDay { get; }
@@ -24,7 +24,7 @@ namespace OntarioCovidNumber.Core
 		public decimal PercentPositive => _days.Sum(d => d.PercentPositive) / _days.Count;
 
 
-		public RollingAverage(List<CovidDayData> days, CovidDayData currentDay)
+		public CasesRollingAverage(List<CovidDayData> days, CovidDayData currentDay)
 		{
 			_days = days;
 			CurrentDay = currentDay;

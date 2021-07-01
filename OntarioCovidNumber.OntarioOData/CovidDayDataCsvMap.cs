@@ -28,6 +28,19 @@ namespace OntarioCovidNumber.OntarioOData
 		}
 	}
 
+	public class VaccineDayDataCsvMap : ClassMap<VaccineDayData>
+	{
+		public VaccineDayDataCsvMap()
+		{
+			Map(m => m.Date).Name("report_date");
+			Map(m => m.DosesAdministeredToday).TypeConverter<ConvertToInt>().Name("previous_day_total_doses_administered").Default(0);
+			Map(m => m.FirstDoseAdministered).TypeConverter<ConvertToInt>().Name("previous_day_at_least_one").Default(0);
+			Map(m => m.SecondDoseAdministered).TypeConverter<ConvertToInt>().Name("previous_day_fully_vaccinated").Default(0);
+			Map(m => m.TotalAdministered).TypeConverter<ConvertToInt>().Name("total_doses_administered").Default(0);
+			Map(m => m.TotalFullyVaccinated).TypeConverter<ConvertToInt>().Name("total_individuals_fully_vaccinated").Default(0);
+		}
+	}
+
 	public class ConvertToInt : ITypeConverter
 	{
 		public object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)

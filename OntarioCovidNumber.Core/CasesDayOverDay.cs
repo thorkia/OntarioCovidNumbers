@@ -5,9 +5,9 @@ using System.Text;
 
 namespace OntarioCovidNumber.Core
 {
-	public class DayOverDay
+	public class CasesDayOverDay
 	{
-		private static readonly HashSet<string> IncreaseGoodFields = new HashSet<string> { "RESOLVED", "TOTALTESTSPERFORMED", "TESTSCOMPLETEDLASTDAY", "NEWRESOLVED" };
+		public static readonly HashSet<string> IncreaseGoodFields = new HashSet<string> { "RESOLVED", "TOTALTESTSPERFORMED", "TESTSCOMPLETEDLASTDAY", "NEWRESOLVED" };
 
 		private readonly CovidDayData _today;
 		private readonly CovidDayData _previousDay;
@@ -39,35 +39,37 @@ namespace OntarioCovidNumber.Core
 
 		#region Percent Change Amounts
 
-		public decimal ActiveCaseChangePercent => PercentChange(_today.ActiveCases, _previousDay.ActiveCases);
-		public decimal ResolvedCaseChangePercent => PercentChange(_today.Resolved, _previousDay.Resolved);
-		public decimal DeathsChangePercent => PercentChange(_today.Deaths, _previousDay.Deaths);
-		public decimal TotalCaseChangePercent => PercentChange(_today.TotalCases, _previousDay.TotalCases);
-		public decimal TotalTestsPerformedChangePercent => PercentChange(_today.TotalTestsPerformed, _previousDay.TotalTestsPerformed);
-		public decimal TestCompletedChangePercent => PercentChange(_today.TestsCompletedLastDay, _previousDay.TestsCompletedLastDay);
-		public decimal PendingTestChangePercent => PercentChange(_today.PendingTests, _previousDay.PendingTests);
-		public decimal InHospitalChangePercent => PercentChange(_today.InHospital, _previousDay.InHospital);
-		public decimal InIcuChangePercent => PercentChange(_today.InIcu, _previousDay.InIcu);
-		public decimal OnVentilatorChangePercent => PercentChange(_today.OnVentilator, _previousDay.OnVentilator);
-		public decimal NewCasesChangePercent => PercentChange(_today.NewCases, _previousDay.NewCases);
-		public decimal NewDeathsChangePercent => PercentChange(_today.NewDeaths, _previousDay.NewDeaths);
-		public decimal NewResolvedChangePercent => PercentChange(_today.NewResolved, _previousDay.NewResolved);
-		public decimal PositiveRateChangePercent => PercentChange(_today.PercentPositive, _previousDay.PercentPositive);
+		public decimal ActiveCaseChangePercent => DayOverDayHelpers.PercentChange(_today.ActiveCases, _previousDay.ActiveCases);
+		public decimal ResolvedCaseChangePercent => DayOverDayHelpers.PercentChange(_today.Resolved, _previousDay.Resolved);
+		public decimal DeathsChangePercent => DayOverDayHelpers.PercentChange(_today.Deaths, _previousDay.Deaths);
+		public decimal TotalCaseChangePercent => DayOverDayHelpers.PercentChange(_today.TotalCases, _previousDay.TotalCases);
+		public decimal TotalTestsPerformedChangePercent => DayOverDayHelpers.PercentChange(_today.TotalTestsPerformed, _previousDay.TotalTestsPerformed);
+		public decimal TestCompletedChangePercent => DayOverDayHelpers.PercentChange(_today.TestsCompletedLastDay, _previousDay.TestsCompletedLastDay);
+		public decimal PendingTestChangePercent => DayOverDayHelpers.PercentChange(_today.PendingTests, _previousDay.PendingTests);
+		public decimal InHospitalChangePercent => DayOverDayHelpers.PercentChange(_today.InHospital, _previousDay.InHospital);
+		public decimal InIcuChangePercent => DayOverDayHelpers.PercentChange(_today.InIcu, _previousDay.InIcu);
+		public decimal OnVentilatorChangePercent => DayOverDayHelpers.PercentChange(_today.OnVentilator, _previousDay.OnVentilator);
+		public decimal NewCasesChangePercent => DayOverDayHelpers.PercentChange(_today.NewCases, _previousDay.NewCases);
+		public decimal NewDeathsChangePercent => DayOverDayHelpers.PercentChange(_today.NewDeaths, _previousDay.NewDeaths);
+		public decimal NewResolvedChangePercent => DayOverDayHelpers.PercentChange(_today.NewResolved, _previousDay.NewResolved);
+		public decimal PositiveRateChangePercent => DayOverDayHelpers.PercentChange(_today.PercentPositive, _previousDay.PercentPositive);
 
 		#endregion
 
-		public DayOverDay(CovidDayData today, CovidDayData previousDay)
+		public CasesDayOverDay(CovidDayData today, CovidDayData previousDay)
 		{
 			_today = today;
 			_previousDay = previousDay;
 		}
 
-		private decimal PercentChange(int today, int previousDay)
+
+		/*
+		private decimal DayOverDayHelpers.PercentChange(int today, int previousDay)
 		{
 			return Math.Abs((decimal) today / previousDay - 1.0m) * 100;
 		}
 
-		private decimal PercentChange(decimal today, decimal previousDay)
+		private decimal DayOverDayHelpers.PercentChange(decimal today, decimal previousDay)
 		{
 			return Math.Abs(today / previousDay - 1.0m) * 100;
 		}
@@ -116,7 +118,7 @@ namespace OntarioCovidNumber.Core
 
 			}
 		}
-		
+		*/
 			                                
 	}
 }
