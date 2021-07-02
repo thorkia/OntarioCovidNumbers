@@ -13,7 +13,7 @@ namespace OntarioCovidNumber.OntarioOData
 {
 	public class OntarioODataRepository : ICovidRepository
 	{
-		public static DateTime FirstDate = new DateTime(2020, 03, 02);
+		public static DateTime FirstDate = new DateTime(2020, 02, 07);
 		public static string DateFormat = "yyyy-MM-dd";
 
 		private static string CASE_DATA_SOURCE = "https://data.ontario.ca/dataset/f4f86e54-872d-43f8-8a86-3892fd3cb5e6/resource/ed270bb8-340b-41f9-a7c6-e8ef587e6d11/download/covidtesting.csv";
