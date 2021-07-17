@@ -9,11 +9,26 @@ namespace OntarioCovidNumber.Core
 	{
 		internal static decimal PercentChange(int today, int previousDay)
 		{
-			return Math.Abs((decimal) today / previousDay - 1.0m) * 100;
+			return PercentChange((decimal) today, (decimal) previousDay);
 		}
 
 		internal static decimal PercentChange(decimal today, decimal previousDay)
 		{
+			if (today == 0 && previousDay == 0)
+			{
+				return 0m;
+			}
+
+			if (today == 0)
+			{
+				return -100m;
+			}
+
+			if (previousDay == 0)
+			{
+				return 100m;
+			}
+
 			return Math.Abs(today / previousDay - 1.0m) * 100;
 		}
 

@@ -19,13 +19,19 @@ namespace OntarioCovidNumber.Console
 
 			ICovidRepository repo = new OntarioODataRepository(logger);
 
-			var items = repo.GetCaseDayData();
+			var items = repo.GetCaseDayData().Where(d => d.NewDeaths == 0).Last();
+			
+			var dayoverdayerror = repo.GetCaseDayOverDayByDate(items.Date);
+			var errrorValue = dayoverdayerror.NewDeathsChangePercent;
+			dayoverdayerror = repo.GetCaseDayOverDayByDate(items.Date.AddDays(1));
+			errrorValue = dayoverdayerror.NewDeathsChangePercent;
+
 			var dayover = repo.GetCaseDayOverDayData();
 			var roll = repo.GetCasesRollingAverage(7);
 
 			var lastavg = roll.Last();
 
-			System.Console.WriteLine($"Count {items.Count()}");
+			//System.Console.WriteLine($"Count {items.Count()}");
 			System.Console.ReadLine();
 		}
 
