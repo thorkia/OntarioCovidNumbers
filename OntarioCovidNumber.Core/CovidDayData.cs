@@ -15,7 +15,7 @@ namespace OntarioCovidNumber.Core
 		/// <summary>
 		/// Resolved : This is the number of recoveries
 		/// </summary>
-		public int Resolved { get; set;}
+		public int Resolved { get; set; }
 		/// <summary>
 		/// Deaths : This is the number of deaths
 		/// </summary>
@@ -23,7 +23,7 @@ namespace OntarioCovidNumber.Core
 		/// <summary>
 		/// Total Cases : This is the number of cases up to this date
 		/// </summary>
-		public int TotalCases { get; set; } 
+		public int TotalCases { get; set; }
 		/// <summary>
 		/// Total patients approved for testing as of Reporting Date : Total number of patients tests
 		/// </summary>
@@ -31,7 +31,7 @@ namespace OntarioCovidNumber.Core
 		/// <summary>
 		/// Total tests completed in the last day : 
 		/// </summary>
-		public int TestsCompletedLastDay { get; set; } 
+		public int TestsCompletedLastDay { get; set; }
 		/// <summary>
 		/// Under Investigation : Total backlog of tests
 		/// </summary>
@@ -48,7 +48,7 @@ namespace OntarioCovidNumber.Core
 		/// Number of patients in ICU on a ventilator with COVID-19 : Number of ICU patients on ventilation on that date
 		/// </summary>
 		public int OnVentilator { get; set; }
-		
+
 		#endregion
 
 		#region Calculated Fields
@@ -70,23 +70,32 @@ namespace OntarioCovidNumber.Core
 		/// <summary>
 		/// Number of Positive Cases
 		/// </summary>
-		public decimal PercentPositive => (NewCases / (decimal)TestsCompletedLastDay) * 100;
+		public decimal PercentPositive => GetPercent(NewCases, (decimal)TestsCompletedLastDay) * 100;			
 
 		/// <summary>
 		/// Mortality Rate for those who received a test for covid
 		/// </summary>
-		public decimal TestMortalityRate => (Deaths / (decimal)TotalTestsPerformed) * 100;
+		public decimal TestMortalityRate => GetPercent(Deaths, (decimal)TotalTestsPerformed) * 100;
 
 		/// <summary>
 		/// Mortality Rate for those who tested positive for covid
 		/// </summary>
-		public decimal PositiveMortalityRate => (Deaths / (decimal)TotalCases) * 100;
+		public decimal PositiveMortalityRate => GetPercent(Deaths, (decimal)TotalCases) * 100;
 
 		/// <summary>
 		/// Mortality Rate for the entire population of Ontario
 		/// </summary>
-		public decimal ProvincialMortalityRate => (Deaths / (decimal) StaticData.OntarioPopulation) * 100;
+		public decimal ProvincialMortalityRate => GetPercent(Deaths, (decimal)StaticData.OntarioPopulation) * 100;
 
+		private decimal GetPercent(decimal numerator, decimal denominator)
+		{
+			if (numerator == 0 || denominator == 0)
+			{
+				return 0;
+			}
+
+			return numerator / denominator;
+		}
 		#endregion
 	}
 }
