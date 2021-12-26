@@ -8,6 +8,6 @@ namespace OntarioCovidNumber.Core
 	{
 		public static readonly int OntarioPopulation = 14733119;
 
-		public static readonly int Ontario12PlusPopulation = 12851870;
+		public static readonly int OntarioVaccineEligible = 14023471;
 	}
 }

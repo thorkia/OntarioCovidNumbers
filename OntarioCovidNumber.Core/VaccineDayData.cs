@@ -24,10 +24,10 @@ namespace OntarioCovidNumber.Core
 
 		public int NumberOnlyFirstDose => TotalAdministered - (TotalFullyVaccinated * 2);
 
-		public decimal FirstDoseOnlyPercentage => (NumberOnlyFirstDose / (decimal)StaticData.Ontario12PlusPopulation) * 100;
+		public decimal FirstDoseOnlyPercentage => (NumberOnlyFirstDose / (decimal)StaticData.OntarioVaccineEligible) * 100;
 
-		public decimal AtleastOnePercentage => ( (NumberOnlyFirstDose + TotalFullyVaccinated) / (decimal)StaticData.Ontario12PlusPopulation) * 100;
+		public decimal AtleastOnePercentage => ( (NumberOnlyFirstDose + TotalFullyVaccinated) / (decimal)StaticData.OntarioVaccineEligible) * 100;
 
-		public decimal FullyVaccinatedPercentage => (TotalFullyVaccinated / (decimal)StaticData.Ontario12PlusPopulation) * 100;
+		public decimal FullyVaccinatedPercentage => (TotalFullyVaccinated / (decimal)StaticData.OntarioVaccineEligible) * 100;
 	}
 }
