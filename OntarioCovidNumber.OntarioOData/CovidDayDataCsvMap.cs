@@ -37,7 +37,10 @@ namespace OntarioCovidNumber.OntarioOData
 			Map(m => m.FirstDoseAdministered).TypeConverter<ConvertToInt>().Name("previous_day_at_least_one").Default(0);
 			Map(m => m.SecondDoseAdministered).TypeConverter<ConvertToInt>().Name("previous_day_fully_vaccinated").Default(0);
 			Map(m => m.TotalAdministered).TypeConverter<ConvertToInt>().Name("total_doses_administered").Default(0);
+
+			Map(m => m.TotalAtleastOne).TypeConverter<ConvertToInt>().Name("total_individuals_at_least_one").Default(0);
 			Map(m => m.TotalFullyVaccinated).TypeConverter<ConvertToInt>().Name("total_individuals_fully_vaccinated").Default(0);
+			Map(m => m.TotalThirdDose).TypeConverter<ConvertToInt>().Name("total_individuals_3doses").Default(0);
 		}
 	}
 

@@ -41,11 +41,13 @@ namespace OntarioCovidNumber.Web.Controllers
 
 			var deaths2020 = _repository.GetCaseDayDataByDate(new DateTime(2020, 12, 31)).Deaths;
 			var deaths2021 = todayCases.Today.Deaths - deaths2020;
+			var deaths2022 = todayCases.Today.Deaths - (deaths2021 + deaths2020);
 
 			decimal mort2020 = (deaths2020 / (decimal)StaticData.OntarioPopulation) * 100;
 			decimal mort2021 = (deaths2021 / (decimal)StaticData.OntarioPopulation) * 100;
+			decimal mort2022 = (deaths2022 / (decimal)StaticData.OntarioPopulation) * 100;
 
-			return View( new SummaryModel { TodayCases = todayCases, YesterdayCases = yesterdayCases, Mortality2020 = mort2020, Mortality2021 = mort2021, TodayVax = todayVax});
+			return View( new SummaryModel { TodayCases = todayCases, YesterdayCases = yesterdayCases, Mortality2020 = mort2020, Mortality2021 = mort2021, Mortality2022 = mort2022, TodayVax = todayVax});
 		}
 
 		public IActionResult RollingAverage()

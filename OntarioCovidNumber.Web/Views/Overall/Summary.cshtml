@@ -53,17 +53,31 @@
 	<div class="col-sm-1 text-left">@todayVax.Today.DosesAdministeredToday</div>
 	<div class="w-100"></div>
 
-	<div class="col-sm-2 font-weight-bold">Total One or More:</div>
-	<div class="col-sm-1 text-left">@(todayVax.Today.NumberOnlyFirstDose + todayVax.Today.TotalFullyVaccinated)</div>
+	<div class="col-sm-2 font-weight-bold">Total One+ Doses:</div>
+	<div class="col-sm-1 text-left">@(todayVax.Today.TotalAtleastOne)</div>
 	<div class="col-sm-4 text-left text-success">
-		Increase of @(todayVax.TotalFullyVaccinatedChangeAmount + todayVax.FirstDoseOnlyChangeAmount)
+		Increase of @(todayVax.AtleastOneChangeAmount)
 	</div>
 	<div class="w-100"></div>
 
-	<div class="col-sm-2 font-weight-bold" title="Based on eligible estimate Ontario population">Percent One or More:</div>
+	<div class="col-sm-2 font-weight-bold" title="Based on eligible estimate Ontario population">Percent One+ Doses:</div>
 	<div class="col-sm-1 text-left">@todayVax.Today.AtleastOnePercentage.ToString("N")%</div>
 	<div class="col-sm-4 text-left text-success">
 		Increase of @todayVax.AtleastOnePercentChangeAmount.ToString("N")%
+	</div>
+	<div class="w-100"></div>
+
+	<div class="col-sm-2 font-weight-bold">Total First Only:</div>
+	<div class="col-sm-1 text-left">@todayVax.Today.NumberOnlyFirstDose</div>
+	<div class="col-sm-4 text-left text-success">
+		@Model.GetVaxChangeDirection(todayVax.FirstDoseOnlyChangeAmount) @todayVax.FirstDoseOnlyChangeAmount.ToString("+#;-#;0")
+	</div>
+	<div class="w-100"></div>
+
+	<div class="col-sm-2 font-weight-bold" title="Based on eligible estimate Ontario population">Percent First Only:</div>
+	<div class="col-sm-1 text-left">@todayVax.Today.FirstDoseOnlyPercentage.ToString("N")%</div>
+	<div class="col-sm-4 text-left text-success">
+		@Model.GetVaxChangeDirection(todayVax.FirstDoseOnlyPercentChangeAmount)	@todayVax.FirstDoseOnlyPercentChangeAmount.ToString("N")%
 	</div>
 	<div class="w-100"></div>
 
@@ -81,19 +95,20 @@
 	</div>
 	<div class="w-100"></div>
 
-
-	<div class="col-sm-2 font-weight-bold">Total First Only:</div>
-	<div class="col-sm-1 text-left">@todayVax.Today.NumberOnlyFirstDose</div>
+	<div class="col-sm-2 font-weight-bold">Total Third Doses:</div>
+	<div class="col-sm-1 text-left">@todayVax.Today.TotalThirdDose</div>
 	<div class="col-sm-4 text-left text-success">
-		@Model.GetVaxChangeDirection(todayVax.FirstDoseOnlyChangeAmount) @todayVax.FirstDoseOnlyChangeAmount.ToString("+#;-#;0")
+		@Model.GetVaxChangeDirection(todayVax.ThirdDoseChangeAmount)	@todayVax.ThirdDoseChangeAmount
 	</div>
 	<div class="w-100"></div>
 
-	<div class="col-sm-2 font-weight-bold" title="Based on eligible estimate Ontario population">Percent First Only:</div>
-	<div class="col-sm-1 text-left">@todayVax.Today.FirstDoseOnlyPercentage.ToString("N")%</div>
+	<div class="col-sm-2 font-weight-bold" title="Based on eligible estimate Ontario population">Percent Both Doses:</div>
+	<div class="col-sm-1 text-left">@todayVax.Today.ThirdDosePercentage.ToString("N")%</div>
 	<div class="col-sm-4 text-left text-success">
-		@Model.GetVaxChangeDirection(todayVax.FirstDoseOnlyPercentChangeAmount)	@todayVax.FirstDoseOnlyPercentChangeAmount.ToString("N")%
+		@Model.GetVaxChangeDirection(todayVax.ThirdDosePercentChangeAmount)	@todayVax.ThirdDosePercentChangeAmount.ToString("N")%
 	</div>
+	<div class="w-100"></div>
+	
 
 
 
@@ -137,6 +152,11 @@
 		Influenza/Pneumonia 2019 Mortality Rate: @( ((2688 / (decimal)StaticData.OntarioPopulation)*100).ToString("#.000"))%
 		<sup><a asp-area="" asp-controller="Overall" asp-action="NoteOnFluMortality" title="A brief explanation of how this number was derived">explanation</a></sup>
 	</div>
+
+  <div class="w-100"></div>
+
+	<div class="col-sm-3 font-weight-bold">2022 Provincial Mortality Rate:</div>
+	<div class="col-sm-1 text-left">@Model.Mortality2022.ToString("#.000")%</div>
 
 	<div class="w-100"></div>
 

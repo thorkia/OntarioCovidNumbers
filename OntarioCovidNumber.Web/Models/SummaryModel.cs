@@ -19,7 +19,9 @@ namespace OntarioCovidNumber.Web.Models
 		public decimal Mortality2020 { get; set; }
 
 		public decimal Mortality2021 { get; set; }
-		
+
+		public decimal Mortality2022 { get; set; }
+
 		public string GetTodayVersusYesterdayCasesDisplayClass(string field)
 		{
 			ChangeType change = ChangeType.NoChange;

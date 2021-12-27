@@ -25,11 +25,18 @@ namespace OntarioCovidNumber.Core
 
 		public int FirstDoseOnlyChangeAmount => _today.NumberOnlyFirstDose - _previousDay.NumberOnlyFirstDose;
 
+		public int ThirdDoseChangeAmount => _today.TotalThirdDose - _previousDay.TotalThirdDose;
+
+		public int AtleastOneChangeAmount => _today.TotalAtleastOne - _previousDay.TotalAtleastOne;
+
+
 		public decimal FirstDoseOnlyPercentChangeAmount => _today.FirstDoseOnlyPercentage - _previousDay.FirstDoseOnlyPercentage;
 
 		public decimal AtleastOnePercentChangeAmount => _today.AtleastOnePercentage - _previousDay.AtleastOnePercentage;
 
 		public decimal FullyVaccinatedPercentChangeAmount => _today.FullyVaccinatedPercentage - _previousDay.FullyVaccinatedPercentage;
+
+		public decimal ThirdDosePercentChangeAmount => _today.ThirdDosePercentage - _previousDay.ThirdDosePercentage;
 
 		#endregion
 
@@ -52,6 +59,10 @@ namespace OntarioCovidNumber.Core
 		public decimal AtleastOnePercentChangePercent => DayOverDayHelpers.PercentChange(_today.AtleastOnePercentage, _previousDay.AtleastOnePercentage);
 
 		public decimal FullyVaccinatedPercentChangePercent => DayOverDayHelpers.PercentChange(_today.FullyVaccinatedPercentage, _previousDay.FullyVaccinatedPercentage);
+
+		public decimal ThirdDoseChangePercent => DayOverDayHelpers.PercentChange(_today.TotalThirdDose, _previousDay.TotalThirdDose);
+
+		public decimal ThirdDosePercentChangePercent => DayOverDayHelpers.PercentChange(_today.ThirdDosePercentage, _previousDay.ThirdDosePercentage);
 
 
 		#endregion region
