@@ -40,7 +40,7 @@ namespace OntarioCovidNumber.Web.Controllers
 			var yesterdayCases = _repository.GetCaseDayOverDayByDate(todayCases.Today.Date.AddDays(-1));
 
 			var deaths2020 = _repository.GetCaseDayDataByDate(new DateTime(2020, 12, 31)).Deaths;
-			var deaths2021 = todayCases.Today.Deaths - deaths2020;
+			var deaths2021 = _repository.GetCaseDayDataByDate(new DateTime(2021, 12, 31)).Deaths - deaths2020;
 			var deaths2022 = todayCases.Today.Deaths - (deaths2021 + deaths2020);
 
 			decimal mort2020 = (deaths2020 / (decimal)StaticData.OntarioPopulation) * 100;
