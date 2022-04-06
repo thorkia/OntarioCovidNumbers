@@ -21,6 +21,10 @@ namespace OntarioCovidNumber.Core
 		/// </summary>
 		public int Deaths { get; set; }
 		/// <summary>
+		/// Deaths : This is the number of deaths
+		/// </summary>
+		public int DeathsNewMethod { get; set; }
+		/// <summary>
 		/// Total Cases : This is the number of cases up to this date
 		/// </summary>
 		public int TotalCases { get; set; }

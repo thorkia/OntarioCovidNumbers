@@ -15,6 +15,7 @@ namespace OntarioCovidNumber.OntarioOData
 			Map(m => m.Date).Name("Reported Date");
 			Map(m => m.ActiveCases).TypeConverter<ConvertToInt>().Name("Confirmed Positive").Default(0);
 			Map(m => m.Deaths).TypeConverter<ConvertToInt>().Name("Deaths").Default(0);
+			Map(m => m.DeathsNewMethod).TypeConverter<ConvertToInt>().Name("Deaths_New_Methodology").Default(0);
 			Map(m => m.Resolved).TypeConverter<ConvertToInt>().Name("Resolved").Default(0);
 			Map(m => m.TotalCases).TypeConverter<ConvertToInt>().Name("Total Cases").Default(0);
 			Map(m => m.TotalTestsPerformed).TypeConverter<ConvertToInt>().Name("Total patients approved for testing as of Reporting Date").Default(0);

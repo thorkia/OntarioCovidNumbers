@@ -136,9 +136,14 @@ namespace OntarioCovidNumber.OntarioOData
 					dayData[i].TestsCompletedLastDay = dayData[i].TotalTestsPerformed - dayData[i-1].TotalTestsPerformed;
 				}
 
+				if (dayData[i].DeathsNewMethod > 0)
+				{
+					dayData[i].Deaths = dayData[i].DeathsNewMethod;
+				}
+
 				dayData[i].NewCases = dayData[i].TotalCases - dayData[i - 1].TotalCases;
 				dayData[i].NewDeaths = dayData[i].Deaths - dayData[i - 1].Deaths;
-				dayData[i].NewResolved = dayData[i].Resolved - dayData[i - 1].Resolved;
+				dayData[i].NewResolved = dayData[i].Resolved - dayData[i - 1].Resolved;					
 
 				_caseDayData.Add(dayData[i]);
 			}
